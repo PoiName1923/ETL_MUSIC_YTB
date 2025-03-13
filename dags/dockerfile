@@ -1,0 +1,17 @@
+FROM apache/airflow:slim-2.10.5-python3.12
+
+USER root
+RUN apt-get update && apt-get install -y \
+    nano psycopg2-binary\ 
+    && rm -rf /var/lib/apt/lists/*
+
+
+USER airflow
+# Copy custom airflow configuration if needed
+# COPY airflow.cfg /opt/airflow/airflow.cfg
+# Set the working directory
+WORKDIR /opt/airflow
+# Expose necessary ports
+EXPOSE 8080
+# Default command
+CMD ["airflow", "standalone"]
