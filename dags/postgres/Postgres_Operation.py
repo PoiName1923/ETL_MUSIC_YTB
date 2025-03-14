@@ -36,20 +36,6 @@ class Postgres_Operation:
             cursor.execute(query, params)
             self.conn.commit()
 
-    '''Create database if not exists'''
-    def create_database(self, database_name):
-        query = f"CREATE DATABASE IF NOT EXISTS {database_name};"
-        self.execute_query(query)
-
-    '''Create schema if not exists'''
-    def create_schema(self, schema_name):
-        query = f"CREATE SCHEMA IF NOT EXISTS {schema_name};"
-        self.execute_query(query)
-
-    '''Create table if not exists'''
-    def create_table(self, create_table_query):
-        self.execute_query(create_table_query)
-
     '''Insert data'''
     def insert_data(self, table_name, df : pd.DataFrame, batch_size=1000):
 
