@@ -4,7 +4,7 @@ from psycopg2.extras import execute_batch
 from contextlib import contextmanager
 
 @contextmanager
-def connect_postgres(username:str = 'ndtien2004', password:str = 'ndtien2004', host:str =  'localhost', port:str = "5432", db:str = 'MUSIC_DB'):
+def connect_postgres(username:str = 'ndtien2004', password:str = 'ndtien2004', host:str =  'postgres', port:str = "5432", db:str = 'postgres'):
     conn = None
     try:
         conn = psycopg2.connect(

@@ -27,14 +27,14 @@ dags = DAG(
 )
 
 get_data  = PythonOperator(
-    tast_id = 'getting_data',
+    task_id = 'getting_data',
     python_callable=get_daily_data_mongo,
-    dags=dags
+    dag=dags
 )
 load_data = PythonOperator(
     task_id = 'loading_data',
     python_callable=loading_daily_postgres,
-    dags=dags
+    dag=dags
 )
 
 
