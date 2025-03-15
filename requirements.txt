@@ -1,2 +1,5 @@
 pymongo==4.9.1
 pandas==2.2.1
+psycopg2-binary
+beautifulsoup4
+ytmusicapi

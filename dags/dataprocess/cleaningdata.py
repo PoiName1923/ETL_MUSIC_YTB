@@ -10,7 +10,7 @@ def return_artists_id_cleaned(Execution_date : str):
         data = data.drop_duplicates()
         data = data.dropna()
         data = data['execution_date'] = pd.to_datetime(data['execution_date'], errors='coerce').dt.strftime('%Y-%m-%d')
-        return data
+        return pd.DataFrame(data)
     with connect_mongodb(username='ndtien2004',password='ndtien2004') as client:
         client_op = MongoDB_Operation(client=client)
         data = client_op.find_data(db_name='ytb_db',collection_name='artists_id',query={"Execution Date":Execution_date})
@@ -22,7 +22,7 @@ def return_artists_song_cleaned(Execution_date : str):
         data = data.drop_duplicates()
         data = data.dropna()
         data[['execution_date','upload_date']] = pd.to_datetime(data[['execution_date','upload_date']], errors='coerce').dt.strftime('%Y-%m-%d')
-        return data
+        return pd.DataFrame(data)
     with connect_mongodb(username='ndtien2004',password='ndtien2004') as client:
         client_op = MongoDB_Operation(client=client)
         data = client_op.find_data(db_name='ytb_db',collection_name='artists_song',query={"Execution Date":Execution_date})

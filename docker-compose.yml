@@ -15,8 +15,15 @@ services:
       - "5432:5432"
     networks:
       - etl_music
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 8082:8080
   mongo:
-    image: mongo:6
+    image: mongo
     container_name: mongodb_container
     restart: always
     environment:
@@ -37,8 +44,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
-      ME_CONFIG_MONGODB_SERVER: mongo
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongo:27017/admin?authSource=admin
     ports:
       - "8081:8081"
     networks:
@@ -57,14 +63,8 @@ services:
       - "8080:8080"
     command: >
       bash -c "airflow db init &&
-               airflow users create 
-               --username ${AIRFLOW_USER} 
-               --password ${AIRFLOW_PASSWORD} 
-               --firstname ${FIRST_NAME}
-               --lastname ${LAST_NAME} 
-               --role ${ROLE}
-               --email ${AIRFLOW_EMAIL} &&
-               airflow webserver & airflow scheduler"
+           airflow users create --username ${AIRFLOW_USER} --password ${AIRFLOW_PASSWORD} --firstname ${FIRST_NAME} --lastname ${LAST_NAME} --role ${ROLE} --email ${AIRFLOW_EMAIL} &&
+           airflow webserver & airflow scheduler"
     networks:
       - etl_music
 networks:
